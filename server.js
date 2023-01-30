@@ -85,7 +85,7 @@ const injectDataToDb = async () => {
 });
 }
 
-setInterval(injectDataToDb, 1000 * 60 )
+// setInterval(injectDataToDb, 1000 * 60 )
 
 app.get('/api', async (req,res) => {
     let data = await MyModel.find({});
