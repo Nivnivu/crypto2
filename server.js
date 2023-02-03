@@ -280,7 +280,8 @@ const insertAfterSort = async () => {
     let pol24 = PolygonarrayOfNumber.slice(PolygonarrayOfNumber.length - 1440, PolygonarrayOfNumber.length)
 
     let arrayOfIntervals = [btc1, btc12, btc24, eth1, eth12, eth24, bnb1, bnb12, bnb24, xrp1, xrp12, xrp24, ada1, ada12, ada24, dog1, dog12, dog24, pol1, pol12, pol24]
-
+    let biginterval = [btc1, btc12, btc24, eth1, eth12, eth24, bnb1, bnb12, bnb24, xrp1, xrp12, xrp24, ada1, ada12, ada24, dog1, dog12, dog24, pol1, pol12, pol24]
+        
     let tempArr = []
 
     const modifyArr = (arr, nth) => {
@@ -341,12 +342,12 @@ const insertAfterSort = async () => {
 
             if (coinRsi > 80) {
                 position = "Short"
-                takeProfit = arrayOfIntervals[q].reduce((acc, cur) => acc + cur) / arrayOfIntervals[q].length
-                stopLost =  array[q][array[q].length - 1] * ((Math.abs((array[q][array[q].length - 1] / takeProfit) - 1) / 2) + 1)
+                takeProfit = biginterval[q].reduce((acc, cur) => acc + cur) / biginterval[q].length
+                stopLost =  biginterval[q][biginterval[q].length - 1] * ((Math.abs((biginterval[q][biginterval[q].length - 1] / takeProfit) - 1) / 2) + 1)
             } else if (coinRsi < 20) {
                 position = "Long"
-                takeProfit = arrayOfIntervals[q].reduce((acc, cur) => acc + cur) / arrayOfIntervals[q].length
-                stopLost = array[q][array[q].length - 1] / ((((takeProfit / array[q][array[q].length - 1]) - 1) / 2) + 1)
+                takeProfit = biginterval[q].reduce((acc, cur) => acc + cur) / biginterval[q].length
+                stopLost = biginterval[q][biginterval[q].length - 1] / ((((takeProfit / biginterval[q][biginterval[q].length - 1]) - 1) / 2) + 1)
             } else {
                 position = "None"
                 takeProfit = 0
