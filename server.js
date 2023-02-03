@@ -6,7 +6,6 @@ const path = require('path')
 const bodyParser = require('body-parser');
 const { takeCoverage } = require('v8');
 const { execPath } = require('process');
-const { data } = require('cheerio/lib/api/attributes');
 const PORT = process.env.PORT || 5000
 let coinArr = []
 
@@ -424,8 +423,7 @@ setInterval(insertAfterSort, 1000 * 65)
 
 app.get('/api', async (req, res) => {
     data = await CalcModel.find({});
-    data = data.slice(data.length - 7)
-    res.json(data)
+    res.json(data.slice(data.length - 7))
 })
 
 
