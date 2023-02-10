@@ -340,11 +340,11 @@ const insertAfterSort = async () => {
             coinRsi = 100 - 100 / (relativeStrength + 1)
 
 
-            if (coinRsi > 80) {
+            if (coinRsi > 70) {
                 position = "Short"
                 takeProfit = biginterval[q].reduce((acc, cur) => acc + cur) / biginterval[q].length
                 stopLost =  biginterval[q][biginterval[q].length - 1] * ((Math.abs((biginterval[q][biginterval[q].length - 1] / takeProfit) - 1) / 2) + 1)
-            } else if (coinRsi < 20) {
+            } else if (coinRsi < 30) {
                 position = "Long"
                 takeProfit = biginterval[q].reduce((acc, cur) => acc + cur) / biginterval[q].length
                 stopLost = biginterval[q][biginterval[q].length - 1] / ((((takeProfit / biginterval[q][biginterval[q].length - 1]) - 1) / 2) + 1)
@@ -421,10 +421,19 @@ const insertAfterSort = async () => {
 
 setInterval(insertAfterSort, 1000 * 65)
 
+const n = 7;
+
+
 
 app.get('/api', async (req, res) => {
-    data = await CalcModel.find({});
-    res.json(data.slice(data.length - 7))
+    CalcModel.countDocuments((err, count) => {
+        const skip = Math.max(0, count - n);
+        CalcModel.find({}).skip(skip).limit(n).exec((err, docs) => {
+            res.json(docs)
+        });
+        
+      });
+    
 })
 
 
