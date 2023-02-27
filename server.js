@@ -123,8 +123,9 @@ const injectDataToDb = async () => {
         console.log(error)      // Failures
     });
 }
+// setInterval(injectDataToDb, 1000 * 60)
 
-setInterval(injectDataToDb, 1000 * 60)
+
 
 let temp
 let Ethereum
@@ -363,7 +364,7 @@ const insertAfterSort = async () => {
     }
     calcForEach(arrayOfIntervals)
 
- 
+    console.log(datetime)
 
     CalcModel.insertMany([{
         name: 'Bitcoin', lastPrice: btc1[btc1.length - 1], date: datetime, nested: {
@@ -419,22 +420,35 @@ const insertAfterSort = async () => {
 }
 
 
-setInterval(insertAfterSort, 1000 * 65)
 
-const n = 7;
 
 
 
 app.get('/api', async (req, res) => {
-    CalcModel.countDocuments((err, count) => {
-        const skip = Math.max(0, count - n);
-        CalcModel.find({}).skip(skip).limit(n).exec((err, docs) => {
-            res.json(docs)
-        });
+
+    const data = await CalcModel.find({}).sort({_id: -1}).limit(7)
+    res.json(data)
+
+    // CalcModel.countDocuments((err, count) => {
+    //     const skip = Math.max(0, count - n);
+    //     CalcModel.find({}).skip(skip).limit(n).exec((err, docs) => {
+    //         res.json(docs)
+    //     });
         
-      });
+    //   });
     
 })
+const isPrimeNumber = (n) => {
+    let result;
+    if (n <= 1) return false;
+    for (let i=2; i < n; i++){ 
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+console.log(isPrimeNumber(59084001829))
+
 
 
 app.listen(PORT, () => {
